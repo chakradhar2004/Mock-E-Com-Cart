@@ -13,7 +13,7 @@ export async function Header() {
         <div className="mr-4 flex">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg">
             <Package className="h-6 w-6 text-primary" />
-            <span className="hidden sm:inline-block">Screening Cart</span>
+            <span className="hidden sm:inline-block">Mock E-Com Cart</span>
           </Link>
         </div>
         

@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
-  title: 'Screening Cart',
+  title: 'Mock E-Com Cart',
   description: 'A modern e-commerce screening cart application.',
 };
 
