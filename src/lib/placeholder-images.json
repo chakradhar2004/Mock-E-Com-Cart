@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "product-1",
+      "description": "A modern, minimalist chair",
+      "imageUrl": "https://images.unsplash.com/photo-1722268994698-b85790171832?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtb2Rlcm4lMjBjaGFpcnxlbnwwfHx8fDE3NjE3MTQwNzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern chair"
+    },
+    {
+      "id": "product-2",
+      "description": "A stylish wooden desk",
+      "imageUrl": "https://images.unsplash.com/photo-1517757910079-f57fd7f49a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b29kZW4lMjBkZXNrfGVufDB8fHx8MTc2MTcyMzEwOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wooden desk"
+    },
+    {
+      "id": "product-3",
+      "description": "A sleek and powerful laptop",
+      "imageUrl": "https://images.unsplash.com/photo-1760597371632-bbd930d6b844?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzbGVlayUyMGxhcHRvcHxlbnwwfHx8fDE3NjE2MTMxMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sleek laptop"
+    },
+    {
+      "id": "product-4",
+      "description": "A comfortable and ergonomic mouse",
+      "imageUrl": "https://images.unsplash.com/photo-1694670929860-9f1802788930?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlcmdvbm9taWMlMjBtb3VzZXxlbnwwfHx8fDE3NjE2NDY4MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ergonomic mouse"
+    },
+    {
+      "id": "product-5",
+      "description": "A high-resolution monitor",
+      "imageUrl": "https://images.unsplash.com/photo-1585923329480-e2f1f8e569c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmVzb2x1dGlvbiUyMG1vbml0b3J8ZW58MHx8fHwxNzYxNzIzMTA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "resolution monitor"
+    },
+    {
+      "id": "product-6",
+      "description": "A mechanical keyboard with RGB lighting",
+      "imageUrl": "https://images.unsplash.com/photo-1664813398575-819b46e5ab8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWVjaGFuaWNhbCUyMGtleWJvYXJkfGVufDB8fHx8MTc2MTcxMzY2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanical keyboard"
+    },
+    {
+      "id": "product-7",
+      "description": "A set of noise-cancelling headphones",
+      "imageUrl": "https://images.unsplash.com/photo-1566286378558-5d52a6710b6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxub2lzZSUyMGNhbmNlbGxpbmd8ZW58MHx8fHwxNzYxNzIzMTA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "noise cancelling"
+    },
+    {
+      "id": "product-8",
+      "description": "A smart watch with fitness tracking",
+      "imageUrl": "https://images.unsplash.com/photo-1461141346587-763ab02bced9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzbWFydCUyMHdhdGNofGVufDB8fHx8MTc2MTYzOTAwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart watch"
+    }
+  ]
 }
