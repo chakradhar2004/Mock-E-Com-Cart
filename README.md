@@ -7,13 +7,13 @@ A modern e-commerce application built with Next.js, React, and Node.js, featurin
 ## 📸 Screenshots
 
 ### 🖼️ Product Listing Page
-![Product Listing Page](./assets/Screenshot-2025-10-29-at-20-09-04-Mock-E-Com-Cart.png)
+![Product Listing Page](Screenshot-2025-10-29-at-20-09-04-Mock-E-Com-Cart.png)
 
 ### 🛒 Cart Sidebar
-![Cart Sidebar](./assets/Screenshot-2025-10-29-at-20-09-41-Mock-E-Com-Cart.png)
+![Cart Sidebar](Screenshot-2025-10-29-at-20-09-41-Mock-E-Com-Cart.png)
 
 ### 💳 Checkout Page
-![Checkout Page](./assets/Screenshot-2025-10-29-at-20-09-59-Mock-E-Com-Cart.png)
+![Checkout Page](Screenshot-2025-10-29-at-20-09-59-Mock-E-Com-Cart.png)
 
 ---
 
