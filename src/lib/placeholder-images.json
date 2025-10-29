@@ -21,7 +21,7 @@
     {
       "id": "product-4",
       "description": "A comfortable and ergonomic mouse",
-      "imageUrl": "https://images.unsplash.com/photo-1615595959923-b151416391a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlcmdvbm9taWMlMjBtb3VzZXxlbnwwfHx8fDE2ODg2NjI5MDl8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3VzZXxlbnwwfHx8fDE3MjE4MzY3Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ergonomic mouse"
     },
     {
@@ -39,7 +39,7 @@
     {
       "id": "product-7",
       "description": "A set of noise-cancelling headphones",
-      "imageUrl": "https://images.unsplash.com/photo-1505238680356-667803448bb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxub2lzZSUyMGNhbmNlbGxpbmd8ZW58MHx8fHwxNzYxNzIzMTA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf40B1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxoZWFkcGhvbmVzfGVufDB8fHx8MTcyMTgzNjgzMnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "noise cancelling"
     },
     {

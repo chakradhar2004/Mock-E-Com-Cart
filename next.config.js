@@ -22,7 +22,7 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'httpss',
         hostname: 'picsum.photos',
         port: '',
         pathname: '/**',
@@ -32,5 +32,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-// Cache-busting comment to ensure images refresh - a new one.
-
+// Cache-busting comment to ensure images refresh - this is the final one.
