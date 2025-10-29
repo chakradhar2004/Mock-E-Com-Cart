@@ -32,4 +32,5 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-// Cache-busting comment to ensure images refresh
+// Cache-busting comment to ensure images refresh - a new one.
+
