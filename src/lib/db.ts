@@ -13,13 +13,13 @@ const globalForDb = global as unknown as {
 };
 
 const productsDb = globalForDb.products ?? (globalForDb.products = [
-      { id: '1', name: 'Minimalist Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
+      { id: '1', name: 'Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
       { id: '2', name: 'Wooden Desk', price: 250.50, ...PlaceHolderImages.find(p => p.id === 'product-2')! },
-      { id: '3', name: 'Sleek Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
-      { id: '4', name: 'Ergonomic Mouse', price: 75.00, ...PlaceHolderImages.find(p => p.id === 'product-4')! },
-      { id: '5', name: '4K Monitor', price: 450.99, ...PlaceHolderImages.find(p => p.id === 'product-5')! },
-      { id: '6', name: 'Mechanical Keyboard', price: 150.00, ...PlaceHolderImages.find(p => p.id === 'product-6')! },
-      { id: '7', name: 'Noise-Cancelling Headphones', price: 300.00, ...PlaceHolderImages.find(p => p.id === 'product-7')! },
+      { id: '3', name: 'Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
+      { id: '4', name: 'Mouse', price: 75.00, ...PlaceHolderImages.find(p => p.id === 'product-4')! },
+      { id: '5', name: 'Monitor', price: 450.99, ...PlaceHolderImages.find(p => p.id === 'product-5')! },
+      { id: '6', name: 'Keyboard', price: 150.00, ...PlaceHolderImages.find(p => p.id === 'product-6')! },
+      { id: '7', name: 'Headphones', price: 300.00, ...PlaceHolderImages.find(p => p.id === 'product-7')! },
       { id: '8', name: 'Smart Watch', price: 350.00, ...PlaceHolderImages.find(p => p.id === 'product-8')! },
     ]);
 
