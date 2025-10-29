@@ -37,6 +37,29 @@ export function CartItemCard({ item }: { item: CartItemWithProduct }) {
 
   const quantity = item.quantity;
 
+  const UpdateForm = () => {
+    const { pending, data } = useFormStatus();
+    return (
+        <form action={updateAction} className="flex items-center gap-2">
+            <input type="hidden" name="productId" value={item.product.id} />
+            <input type="hidden" name="quantity" value={quantity} />
+            <Button variant="outline" size="icon" type="submit" name="intent" value="decrement" disabled={pending}>
+                {pending && data?.get('intent') === 'decrement' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minus className="h-4 w-4" />}
+            </Button>
+            <Input
+                type="number"
+                name="quantityDisplay"
+                value={quantity}
+                className="h-9 w-14 text-center"
+                readOnly
+            />
+            <Button variant="outline" size="icon" type="submit" name="intent" value="increment" disabled={pending}>
+                {pending && data?.get('intent') === 'increment' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+            </Button>
+        </form>
+    );
+  }
+
   return (
     <div className="flex items-center gap-4">
       <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border">
@@ -52,22 +75,7 @@ export function CartItemCard({ item }: { item: CartItemWithProduct }) {
         <h3 className="font-semibold">{item.product.name}</h3>
         <p className="text-sm text-muted-foreground">{formatCurrency(item.product.price)}</p>
         <div className="mt-2 flex items-center gap-2">
-            <form action={updateAction} className="flex items-center gap-2">
-                <input type="hidden" name="productId" value={item.product.id} />
-                <Button variant="outline" size="icon" type="submit" name="intent" value="decrement" disabled={useFormStatus().pending}>
-                    {useFormStatus().pending && useFormStatus().data?.get('intent') === 'decrement' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minus className="h-4 w-4" />}
-                </Button>
-                <Input
-                    type="number"
-                    name="quantity"
-                    value={quantity}
-                    className="h-9 w-14 text-center"
-                    readOnly
-                />
-                <Button variant="outline" size="icon" type="submit" name="intent" value="increment" disabled={useFormStatus().pending}>
-                    {useFormStatus().pending && useFormStatus().data?.get('intent') === 'increment' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
-                </Button>
-            </form>
+            <UpdateForm />
             <form action={removeAction}>
                  <input type="hidden" name="productId" value={item.product.id} />
                  <SubmitButton variant="ghost" size="icon">

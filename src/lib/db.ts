@@ -1,10 +1,18 @@
+
 import { Product, CartItem, Order, CartItemWithProduct } from './types';
 import { unstable_noStore as noStore } from 'next/cache';
 import { PlaceHolderImages } from './placeholder-images';
 
 // --- MOCK DATABASE ---
 
-const products: Product[] = [
+// Using a global symbol to ensure the mock data is persistent across requests in a dev environment.
+const globalForDb = global as unknown as { 
+  products: Product[], 
+  cart: CartItem[], 
+  orders: Order[] 
+};
+
+const products: Product[] = globalForDb.products || [
   { id: '1', name: 'Minimalist Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
   { id: '2', name: 'Wooden Desk', price: 250.50, ...PlaceHolderImages.find(p => p.id === 'product-2')! },
   { id: '3', name: 'Sleek Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
@@ -15,9 +23,21 @@ const products: Product[] = [
   { id: '8', name: 'Smart Watch', price: 350.00, ...PlaceHolderImages.find(p => p.id === 'product-8')! },
 ];
 
-let cart: CartItem[] = [];
+if (process.env.NODE_ENV !== 'production') {
+  globalForDb.products = products;
+}
 
-let orders: Order[] = [];
+
+let cart: CartItem[] = globalForDb.cart || [];
+if (process.env.NODE_ENV !== 'production') {
+  globalForDb.cart = cart;
+}
+
+let orders: Order[] = globalForDb.orders || [];
+if (process.env.NODE_ENV !== 'production') {
+    globalForDb.orders = orders;
+}
+
 
 // --- DATABASE FUNCTIONS ---
 
@@ -73,7 +93,8 @@ export async function updateCartItemQuantity(productId: string, quantity: number
     if (quantity > 0) {
       item.quantity = quantity;
     } else {
-      cart = cart.filter(cartItem => cartItem.productId !== productId);
+      globalForDb.cart = cart.filter(cartItem => cartItem.productId !== productId);
+      cart = globalForDb.cart;
     }
   }
   return cart;
@@ -82,7 +103,8 @@ export async function updateCartItemQuantity(productId: string, quantity: number
 export async function removeFromCart(productId: string) {
   noStore();
   await delay(100);
-  cart = cart.filter(item => item.productId !== productId);
+  globalForDb.cart = cart.filter(item => item.productId !== productId);
+  cart = globalForDb.cart;
   return cart;
 }
 
@@ -90,30 +112,36 @@ export async function clearCart() {
   noStore();
   await delay(100);
   cart = [];
+  globalForDb.cart = [];
 }
 
-export async function createOrder(customerName: string, customerEmail: string): Promise<Order> {
-  noStore();
-  await delay(1000);
-  const items = await getCartItemsWithProducts();
-  if (items.length === 0) {
-    throw new Error("Cannot create an order with an empty cart.");
-  }
+export async function createOrder(customerName: string, customerEmail: string): Promise<Order | null> {
+    noStore();
+    await delay(1000);
+    const currentCart = await getCart();
+    if (currentCart.length === 0) {
+      // Return null or throw an error if the cart is empty
+      return null;
+    }
+    const items = await getCartItemsWithProducts();
+    if (items.length === 0) {
+      throw new Error("Cannot create an order with an empty cart.");
+    }
+    
+    const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   
-  const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-
-  const newOrder: Order = {
-    id: `ord_${Date.now()}`,
-    customerName,
-    customerEmail,
-    items,
-    total,
-    createdAt: new Date(),
-  };
-  orders.push(newOrder);
-  await clearCart();
-  return newOrder;
-}
+    const newOrder: Order = {
+      id: `ord_${Date.now()}`,
+      customerName,
+      customerEmail,
+      items,
+      total,
+      createdAt: new Date(),
+    };
+    orders.push(newOrder);
+    await clearCart();
+    return newOrder;
+  }
 
 export async function getOrder(id: string): Promise<Order | undefined> {
   noStore();
