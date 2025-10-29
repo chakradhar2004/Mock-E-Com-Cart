@@ -15,14 +15,6 @@ A modern e-commerce application built with Next.js, React, and Node.js, featurin
 ### 💳 Checkout Page
 ![Checkout Page](https://github.com/chakradhar2004/Mock-E-Com-Cart/blob/main/Screenshot%202025-10-29%20at%2020-09-59%20Mock%20E-Com%20Cart.png?raw=true)
 
----
-
-## 🎥 Demo Video
-
-▶️ [Watch the Demo on Loom](https://www.loom.com/share/ccf7e2e516654b56ad3072c371305ef7)
-
----
-
 ## 🎥 Demo Video
 
 ▶️ [Watch the Demo on Loom](https://www.loom.com/share/ccf7e2e516654b56ad3072c371305ef7)
