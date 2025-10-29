@@ -2,6 +2,27 @@
 
 A modern e-commerce application built with Next.js, React, and Node.js, featuring a shopping cart with real-time updates and a clean, responsive UI.
 
+---
+
+## 📸 Screenshots
+
+### 🖼️ Product Listing Page
+![Product Listing Page](./assets/Screenshot-2025-10-29-at-20-09-04-Mock-E-Com-Cart.png)
+
+### 🛒 Cart Sidebar
+![Cart Sidebar](./assets/Screenshot-2025-10-29-at-20-09-41-Mock-E-Com-Cart.png)
+
+### 💳 Checkout Page
+![Checkout Page](./assets/Screenshot-2025-10-29-at-20-09-59-Mock-E-Com-Cart.png)
+
+---
+
+## 🎥 Demo Video
+
+▶️ [Watch the Demo on Loom](https://www.loom.com/share/ccf7e2e516654b56ad3072c371305ef7)
+
+---
+
 ## Features
 
 - 🛒 **Shopping Cart** - Add, update, and remove products with real-time updates
