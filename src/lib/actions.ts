@@ -5,7 +5,7 @@ import { addToCart, createOrder, removeFromCart, updateCartItemQuantity } from '
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
 
-export async function addToCartAction(formData: FormData) {
+export async function addToCartAction(_prevState: any, formData: FormData) {
   const schema = z.object({
     productId: z.string(),
     quantity: z.coerce.number().min(1),
