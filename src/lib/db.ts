@@ -12,57 +12,48 @@ const globalForDb = global as unknown as {
   orders: Order[] 
 };
 
-const products: Product[] = globalForDb.products || [
-  { id: '1', name: 'Minimalist Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
-  { id: '2', name: 'Wooden Desk', price: 250.50, ...PlaceHolderImages.find(p => p.id === 'product-2')! },
-  { id: '3', name: 'Sleek Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
-  { id: '4', name: 'Ergonomic Mouse', price: 75.00, ...PlaceHolderImages.find(p => p.id === 'product-4')! },
-  { id: '5', name: '4K Monitor', price: 450.99, ...PlaceHolderImages.find(p => p.id === 'product-5')! },
-  { id: '6', name: 'Mechanical Keyboard', price: 150.00, ...PlaceHolderImages.find(p => p.id === 'product-6')! },
-  { id: '7', name: 'Noise-Cancelling Headphones', price: 300.00, ...PlaceHolderImages.find(p => p.id === 'product-7')! },
-  { id: '8', name: 'Smart Watch', price: 350.00, ...PlaceHolderImages.find(p => p.id === 'product-8')! },
-];
-
 if (process.env.NODE_ENV !== 'production') {
-  globalForDb.products = products;
+  if (!globalForDb.products) {
+    globalForDb.products = [
+      { id: '1', name: 'Minimalist Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
+      { id: '2', name: 'Wooden Desk', price: 250.50, ...PlaceHolderImages.find(p => p.id === 'product-2')! },
+      { id: '3', name: 'Sleek Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
+      { id: '4', name: 'Ergonomic Mouse', price: 75.00, ...PlaceHolderImages.find(p => p.id === 'product-4')! },
+      { id: '5', name: '4K Monitor', price: 450.99, ...PlaceHolderImages.find(p => p.id === 'product-5')! },
+      { id: '6', name: 'Mechanical Keyboard', price: 150.00, ...PlaceHolderImages.find(p => p.id === 'product-6')! },
+      { id: '7', name: 'Noise-Cancelling Headphones', price: 300.00, ...PlaceHolderImages.find(p => p.id === 'product-7')! },
+      { id: '8', name: 'Smart Watch', price: 350.00, ...PlaceHolderImages.find(p => p.id === 'product-8')! },
+    ];
+  }
+  if (!globalForDb.cart) {
+    globalForDb.cart = [];
+  }
+  if (!globalForDb.orders) {
+    globalForDb.orders = [];
+  }
 }
 
-
-let cart: CartItem[] = globalForDb.cart || [];
-if (process.env.NODE_ENV !== 'production') {
-  globalForDb.cart = cart;
-}
-
-let orders: Order[] = globalForDb.orders || [];
-if (process.env.NODE_ENV !== 'production') {
-    globalForDb.orders = orders;
-}
-
+const products: Product[] = globalForDb.products;
+let cart: CartItem[] = globalForDb.cart;
+let orders: Order[] = globalForDb.orders;
 
 // --- DATABASE FUNCTIONS ---
 
-// Simulate network delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 export async function getProducts(): Promise<Product[]> {
-  await delay(500);
   return products;
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
-  await delay(100);
   return products.find(p => p.id === id);
 }
 
 export async function getCart(): Promise<CartItem[]> {
   noStore();
-  await delay(100);
   return cart;
 }
 
 export async function getCartItemsWithProducts(): Promise<CartItemWithProduct[]> {
   noStore();
-  await delay(200);
   const cartItems = await getCart();
   const itemsWithProducts = await Promise.all(
     cartItems.map(async (item) => {
@@ -75,52 +66,47 @@ export async function getCartItemsWithProducts(): Promise<CartItemWithProduct[]>
 
 export async function addToCart(productId: string, quantity: number) {
   noStore();
-  await delay(200);
   const existingItem = cart.find(item => item.productId === productId);
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
     cart.push({ productId, quantity });
   }
+  globalForDb.cart = cart;
   return cart;
 }
 
 export async function updateCartItemQuantity(productId: string, quantity: number) {
   noStore();
-  await delay(100);
   const item = cart.find(item => item.productId === productId);
   if (item) {
     if (quantity > 0) {
       item.quantity = quantity;
     } else {
-      globalForDb.cart = cart.filter(cartItem => cartItem.productId !== productId);
-      cart = globalForDb.cart;
+      cart = cart.filter(cartItem => cartItem.productId !== productId);
     }
   }
+  globalForDb.cart = cart;
   return cart;
 }
 
 export async function removeFromCart(productId: string) {
   noStore();
-  await delay(100);
-  globalForDb.cart = cart.filter(item => item.productId !== productId);
-  cart = globalForDb.cart;
+  cart = cart.filter(item => item.productId !== productId);
+  globalForDb.cart = cart;
   return cart;
 }
 
 export async function clearCart() {
   noStore();
-  await delay(100);
   cart = [];
   globalForDb.cart = [];
 }
 
 export async function createOrder(customerName: string, customerEmail: string): Promise<Order | null> {
     noStore();
-    await delay(1000);
     const currentCart = await getCart();
     if (currentCart.length === 0) {
-      // Return null or throw an error if the cart is empty
       return null;
     }
     const items = await getCartItemsWithProducts();
@@ -139,12 +125,12 @@ export async function createOrder(customerName: string, customerEmail: string): 
       createdAt: new Date(),
     };
     orders.push(newOrder);
+    globalForDb.orders = orders;
     await clearCart();
     return newOrder;
   }
 
 export async function getOrder(id: string): Promise<Order | undefined> {
   noStore();
-  await delay(100);
   return orders.find(o => o.id === id);
 }
