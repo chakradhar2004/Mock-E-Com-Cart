@@ -7,13 +7,19 @@ A modern e-commerce application built with Next.js, React, and Node.js, featurin
 ## 📸 Screenshots
 
 ### 🖼️ Product Listing Page
-![Product Listing Page]([Screenshot 2025-10-29 at 20-09-04 Mock E-Com Cart.png](https://github.com/chakradhar2004/Mock-E-Com-Cart/blob/main/Screenshot%202025-10-29%20at%2020-09-04%20Mock%20E-Com%20Cart.png))
+![Product Listing Page](https://github.com/chakradhar2004/Mock-E-Com-Cart/blob/main/Screenshot%202025-10-29%20at%2020-09-04%20Mock%20E-Com%20Cart.png?raw=true)
 
 ### 🛒 Cart Sidebar
-![Cart Sidebar](Screenshot-2025-10-29-at-20-09-41-Mock-E-Com-Cart.png)
+![Cart Sidebar](https://github.com/chakradhar2004/Mock-E-Com-Cart/blob/main/Screenshot%202025-10-29%20at%2020-09-41%20Mock%20E-Com%20Cart.png?raw=true)
 
 ### 💳 Checkout Page
-![Checkout Page](Screenshot-2025-10-29-at-20-09-59-Mock-E-Com-Cart.png)
+![Checkout Page](https://github.com/chakradhar2004/Mock-E-Com-Cart/blob/main/Screenshot%202025-10-29%20at%2020-09-59%20Mock%20E-Com%20Cart.png?raw=true)
+
+---
+
+## 🎥 Demo Video
+
+▶️ [Watch the Demo on Loom](https://www.loom.com/share/ccf7e2e516654b56ad3072c371305ef7)
 
 ---
 
