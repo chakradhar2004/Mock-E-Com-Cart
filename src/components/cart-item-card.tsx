@@ -6,58 +6,37 @@ import { Input } from './ui/input';
 import { Minus, Plus, Trash2, Loader2 } from 'lucide-react';
 import type { CartItemWithProduct } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
-import { useFormStatus } from 'react-dom';
 import { removeCartItemAction, updateCartItemQuantityAction } from '@/lib/actions';
-import { useEffect, useActionState } from 'react';
+import { useActionState, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-function SubmitButton({ children, variant, size }: { children: React.ReactNode; variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined, size?: "default" | "sm" | "lg" | "icon" | null | undefined }) {
-  const { pending } = useFormStatus();
-  return (
-    <Button variant={variant} size={size} type="submit" disabled={pending} aria-disabled={pending}>
-      {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : children}
-    </Button>
-  );
-}
 
 export function CartItemCard({ item }: { item: CartItemWithProduct }) {
   const { toast } = useToast();
-  
-  const [updateState, updateAction] = useActionState(updateCartItemQuantityAction, null);
-  const [removeState, removeAction] = useActionState(removeCartItemAction, null);
+  const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    if (updateState?.error) {
-      toast({ title: "Error", description: updateState.error, variant: 'destructive' });
-    }
-    if (removeState?.error) {
-        toast({ title: "Error", description: removeState.error, variant: 'destructive' });
-    }
-  }, [updateState, removeState, toast]);
+  const handleQuantityChange = (intent: 'increment' | 'decrement') => {
+    startTransition(async () => {
+        const formData = new FormData();
+        formData.append('productId', item.product.id);
+        formData.append('quantity', item.quantity.toString());
+        formData.append('intent', intent);
+        const result = await updateCartItemQuantityAction(null, formData);
+        if (result?.error) {
+            toast({ title: "Error", description: result.error, variant: 'destructive' });
+        }
+    });
+  }
 
-  const quantity = item.quantity;
-
-  const UpdateForm = () => {
-    const { pending, data } = useFormStatus();
-    return (
-        <form action={updateAction} className="flex items-center gap-2">
-            <input type="hidden" name="productId" value={item.product.id} />
-            <input type="hidden" name="quantity" value={quantity} />
-            <Button variant="outline" size="icon" type="submit" name="intent" value="decrement" disabled={pending}>
-                {pending && data?.get('intent') === 'decrement' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minus className="h-4 w-4" />}
-            </Button>
-            <Input
-                type="number"
-                name="quantityDisplay"
-                value={quantity}
-                className="h-9 w-14 text-center"
-                readOnly
-            />
-            <Button variant="outline" size="icon" type="submit" name="intent" value="increment" disabled={pending}>
-                {pending && data?.get('intent') === 'increment' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
-            </Button>
-        </form>
-    );
+  const handleRemove = () => {
+    startTransition(async () => {
+        const formData = new FormData();
+        formData.append('productId', item.product.id);
+        const result = await removeCartItemAction(null, formData);
+        if (result?.error) {
+            toast({ title: "Error", description: result.error, variant: 'destructive' });
+        }
+    });
   }
 
   return (
@@ -75,16 +54,26 @@ export function CartItemCard({ item }: { item: CartItemWithProduct }) {
         <h3 className="font-semibold">{item.product.name}</h3>
         <p className="text-sm text-muted-foreground">{formatCurrency(item.product.price)}</p>
         <div className="mt-2 flex items-center gap-2">
-            <UpdateForm />
-            <form action={removeAction}>
-                 <input type="hidden" name="productId" value={item.product.id} />
-                 <SubmitButton variant="ghost" size="icon">
-                    <Trash2 className="h-4 w-4 text-red-500" />
-                 </SubmitButton>
-            </form>
+            <div className="flex items-center gap-2">
+                <Button variant="outline" size="icon" onClick={() => handleQuantityChange('decrement')} disabled={isPending}>
+                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minus className="h-4 w-4" />}
+                </Button>
+                <Input
+                    type="number"
+                    value={item.quantity}
+                    className="h-9 w-14 text-center"
+                    readOnly
+                />
+                <Button variant="outline" size="icon" onClick={() => handleQuantityChange('increment')} disabled={isPending}>
+                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                </Button>
+            </div>
+            <Button variant="ghost" size="icon" onClick={handleRemove} disabled={isPending}>
+                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4 text-destructive" />}
+            </Button>
         </div>
       </div>
-       <div className="font-semibold">{formatCurrency(item.product.price * quantity)}</div>
+       <div className="font-semibold">{formatCurrency(item.product.price * item.quantity)}</div>
     </div>
   );
 }

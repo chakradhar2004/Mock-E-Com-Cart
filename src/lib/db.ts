@@ -12,9 +12,7 @@ const globalForDb = global as unknown as {
   orders: Order[] 
 };
 
-if (process.env.NODE_ENV !== 'production') {
-  if (!globalForDb.products) {
-    globalForDb.products = [
+const productsDb = globalForDb.products ?? (globalForDb.products = [
       { id: '1', name: 'Minimalist Chair', price: 120.00, ...PlaceHolderImages.find(p => p.id === 'product-1')! },
       { id: '2', name: 'Wooden Desk', price: 250.50, ...PlaceHolderImages.find(p => p.id === 'product-2')! },
       { id: '3', name: 'Sleek Laptop', price: 1200.00, ...PlaceHolderImages.find(p => p.id === 'product-3')! },
@@ -23,33 +21,25 @@ if (process.env.NODE_ENV !== 'production') {
       { id: '6', name: 'Mechanical Keyboard', price: 150.00, ...PlaceHolderImages.find(p => p.id === 'product-6')! },
       { id: '7', name: 'Noise-Cancelling Headphones', price: 300.00, ...PlaceHolderImages.find(p => p.id === 'product-7')! },
       { id: '8', name: 'Smart Watch', price: 350.00, ...PlaceHolderImages.find(p => p.id === 'product-8')! },
-    ];
-  }
-  if (!globalForDb.cart) {
-    globalForDb.cart = [];
-  }
-  if (!globalForDb.orders) {
-    globalForDb.orders = [];
-  }
-}
+    ]);
 
-const products: Product[] = globalForDb.products;
-let cart: CartItem[] = globalForDb.cart;
-let orders: Order[] = globalForDb.orders;
+const cartDb = globalForDb.cart ?? (globalForDb.cart = []);
+const ordersDb = globalForDb.orders ?? (globalForDb.orders = []);
+
 
 // --- DATABASE FUNCTIONS ---
 
 export async function getProducts(): Promise<Product[]> {
-  return products;
+  return productsDb;
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
-  return products.find(p => p.id === id);
+  return productsDb.find(p => p.id === id);
 }
 
 export async function getCart(): Promise<CartItem[]> {
   noStore();
-  return cart;
+  return cartDb;
 }
 
 export async function getCartItemsWithProducts(): Promise<CartItemWithProduct[]> {
@@ -66,41 +56,40 @@ export async function getCartItemsWithProducts(): Promise<CartItemWithProduct[]>
 
 export async function addToCart(productId: string, quantity: number) {
   noStore();
-  const existingItem = cart.find(item => item.productId === productId);
+  const existingItem = cartDb.find(item => item.productId === productId);
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ productId, quantity });
+    cartDb.push({ productId, quantity });
   }
-  globalForDb.cart = cart;
-  return cart;
+  return cartDb;
 }
 
 export async function updateCartItemQuantity(productId: string, quantity: number) {
   noStore();
-  const item = cart.find(item => item.productId === productId);
-  if (item) {
+  const itemIndex = cartDb.findIndex(item => item.productId === productId);
+  if (itemIndex > -1) {
     if (quantity > 0) {
-      item.quantity = quantity;
+      cartDb[itemIndex].quantity = quantity;
     } else {
-      cart = cart.filter(cartItem => cartItem.productId !== productId);
+      cartDb.splice(itemIndex, 1);
     }
   }
-  globalForDb.cart = cart;
-  return cart;
+  return cartDb;
 }
 
 export async function removeFromCart(productId: string) {
   noStore();
-  cart = cart.filter(item => item.productId !== productId);
-  globalForDb.cart = cart;
-  return cart;
+  const itemIndex = cartDb.findIndex(item => item.productId === productId);
+  if (itemIndex > -1) {
+    cartDb.splice(itemIndex, 1);
+  }
+  return cartDb;
 }
 
 export async function clearCart() {
   noStore();
-  cart = [];
-  globalForDb.cart = [];
+  cartDb.length = 0;
 }
 
 export async function createOrder(customerName: string, customerEmail: string): Promise<Order | null> {
@@ -124,13 +113,12 @@ export async function createOrder(customerName: string, customerEmail: string): 
       total,
       createdAt: new Date(),
     };
-    orders.push(newOrder);
-    globalForDb.orders = orders;
+    ordersDb.push(newOrder);
     await clearCart();
     return newOrder;
   }
 
 export async function getOrder(id: string): Promise<Order | undefined> {
   noStore();
-  return orders.find(o => o.id === id);
+  return ordersDb.find(o => o.id === id);
 }
