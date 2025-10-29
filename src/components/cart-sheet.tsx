@@ -51,7 +51,7 @@ export function CartSheet({ cartItems, totalQuantity }: CartSheetProps) {
                     <span>{formatCurrency(total)}</span>
                 </div>
                 <SheetClose asChild>
-                    <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90">
+                    <Button asChild size="lg" className="w-full">
                         <Link href="/checkout">Proceed to Checkout</Link>
                     </Button>
                 </SheetClose>
