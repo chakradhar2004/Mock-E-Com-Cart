@@ -36,22 +36,22 @@ export async function updateCartItemQuantityAction(_prevState: any, formData: Fo
     const schema = z.object({
         productId: z.string(),
         quantity: z.coerce.number(),
-        delta: z.coerce.number().optional()
+        intent: z.string(),
     });
     
     const parseResult = schema.safeParse({
         productId: formData.get('productId'),
         quantity: formData.get('quantity'),
-        delta: formData.get('delta')
+        intent: formData.get('intent')
     });
 
     if (!parseResult.success) {
       return { error: 'Invalid input.' };
     }
 
-    const { productId, quantity, delta } = parseResult.data;
+    const { productId, quantity, intent } = parseResult.data;
     
-    const newQuantity = delta ? (formData.get('_action') === 'increment' ? quantity + delta : quantity - delta) : quantity;
+    const newQuantity = intent === 'increment' ? quantity + 1 : quantity - 1;
 
     try {
         await updateCartItemQuantity(productId, newQuantity);

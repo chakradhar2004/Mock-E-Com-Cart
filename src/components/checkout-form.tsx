@@ -1,12 +1,12 @@
 'use client';
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { placeOrderAction } from "@/lib/actions";
-import { useEffect } from "react";
+import { useEffect, useActionState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
@@ -21,7 +21,7 @@ function SubmitButton() {
 }
 
 export function CheckoutForm() {
-    const [state, formAction] = useFormState(placeOrderAction, null);
+    const [state, formAction] = useActionState(placeOrderAction, null);
     const { toast } = useToast();
 
     useEffect(() => {
