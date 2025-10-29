@@ -18,14 +18,14 @@ export function CartItemCard({ item }: CartItemCardProps) {
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity < 1) return;
-    updateQuantity(item._id, newQuantity);
+    updateQuantity(item.product.id, newQuantity);
   };
 
   const handleRemove = () => {
-    removeFromCart(item._id);
+    removeFromCart(item.product.id);
     toast({
       title: 'Removed from cart',
-      description: `${item.name} has been removed from your cart.`,
+      description: `${item.product.name} has been removed from your cart.`,
     });
   };
 
@@ -34,15 +34,15 @@ export function CartItemCard({ item }: CartItemCardProps) {
       <div className="flex items-center gap-4">
         <div className="relative h-16 w-16 overflow-hidden rounded-md">
           <Image
-            src={item.image}
-            alt={item.name}
+            src={item.product.image}
+            alt={item.product.name}
             fill
             className="object-cover"
           />
         </div>
         <div>
-          <h3 className="font-medium">{item.name}</h3>
-          <p className="text-sm text-gray-500">{formatCurrency(item.price)}</p>
+          <h3 className="font-medium">{item.product.name}</h3>
+          <p className="text-sm text-gray-500">{formatCurrency(item.product.price)}</p>
         </div>
       </div>
       <div className="flex items-center gap-2">

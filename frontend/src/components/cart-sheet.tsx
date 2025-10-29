@@ -35,15 +35,7 @@ export function CartSheet() {
             <div className="flex-1 overflow-y-auto">
               <div className="flex flex-col gap-4 p-4">
                 {cartItems.map((item) => (
-                  <CartItemCard 
-                    key={item._id} 
-                    item={{
-                      ...item,
-                      product: typeof item.product === 'string' 
-                        ? { _id: item.product } as any 
-                        : item.product
-                    }} 
-                  />
+                  <CartItemCard key={item.product.id} item={item} />
                 ))}
               </div>
             </div>

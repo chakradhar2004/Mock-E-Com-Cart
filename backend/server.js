@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Initialize Express app
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 // API Routes
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

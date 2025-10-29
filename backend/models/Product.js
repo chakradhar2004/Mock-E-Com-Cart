@@ -23,17 +23,8 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  stock: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0
-  },
-  // Virtual for countInStock to maintain compatibility with frontend
   countInStock: {
     type: Number,
-    get() { return this.stock; },
-    set(val) { this.stock = val; },
     required: true,
     min: 0,
     default: 0
@@ -50,8 +41,7 @@ const productSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  _id: false
 });
 
 const Product = mongoose.model('Product', productSchema);

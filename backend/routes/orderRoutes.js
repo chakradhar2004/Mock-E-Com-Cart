@@ -1,12 +1,10 @@
 const express = require('express');
-const Order = require('../models/Order');
-const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // @desc    Create new order
 // @route   POST /api/orders
-// @access  Private
-router.post('/', protect, async (req, res) => {
+// @access  Public
+router.post('/', async (req, res) => {
   try {
     const {
       orderItems,
@@ -22,8 +20,7 @@ router.post('/', protect, async (req, res) => {
       res.status(400);
       throw new Error('No order items');
     } else {
-      const order = new Order({
-        user: req.user._id,
+      const order = {
         orderItems,
         shippingAddress,
         paymentMethod,
@@ -31,10 +28,9 @@ router.post('/', protect, async (req, res) => {
         taxPrice,
         shippingPrice,
         totalPrice,
-      });
+      };
 
-      const createdOrder = await order.save();
-      res.status(201).json(createdOrder);
+      res.status(201).json(order);
     }
   } catch (error) {
     console.error(error);
@@ -44,8 +40,8 @@ router.post('/', protect, async (req, res) => {
 
 // @desc    Get order by ID
 // @route   GET /api/orders/:id
-// @access  Private
-router.get('/:id', protect, async (req, res) => {
+// @access  Public
+router.get('/:id', async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate('user', 'name email');
     
@@ -58,6 +54,15 @@ router.get('/:id', protect, async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
+});
+
+// @desc    Mock checkout
+// @route   POST /api/checkout
+// @access  Public
+router.post('/checkout', (req, res) => {
+  const { cartItems } = req.body;
+  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  res.json({ total, timestamp: new Date() });
 });
 
 module.exports = router;

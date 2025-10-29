@@ -27,38 +27,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    if (cartItems.length > 0) {
-      saveCartToStorage(cartItems);
-    }
+    saveCartToStorage(cartItems);
   }, [cartItems]);
 
   const addToCart = (product: Product, quantity: number) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => 
-        typeof item.product === 'string' 
-          ? item.product === product._id
-          : item.product._id === product._id
-      );
+      const existingItem = prevItems.find(item => item.product.id === product.id);
 
       if (existingItem) {
         return prevItems.map(item =>
-          (typeof item.product === 'string' ? item.product : item.product._id) === product._id
+          item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
+      } else {
+        return [...prevItems, { product, quantity }];
       }
-
-      return [
-        ...prevItems,
-        {
-          _id: Math.random().toString(36).substr(2, 9),
-          product: product._id,
-          name: product.name,
-          image: product.image,
-          price: product.price,
-          quantity
-        }
-      ];
     });
   };
 
@@ -70,7 +54,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     setCartItems(prevItems =>
       prevItems.map(item =>
-        (typeof item.product === 'string' ? item.product : item.product._id) === productId
+        item.product.id === productId
           ? { ...item, quantity }
           : item
       )
@@ -79,19 +63,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const removeFromCart = (productId: string) => {
     setCartItems(prevItems =>
-      prevItems.filter(
-        item => (typeof item.product === 'string' ? item.product : item.product._id) !== productId
-      )
+      prevItems.filter(item => item.product.id !== productId)
     );
   };
 
   const clearCart = () => {
     setCartItems([]);
+    saveCartToStorage([]); // Also clear from local storage
   };
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
 
